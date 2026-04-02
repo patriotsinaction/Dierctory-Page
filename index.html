@@ -15,12 +15,14 @@
     .description { font-size: 14px; color: #444; }
     .link { display: inline-block; margin-top: 12px; color: #007BFF; text-decoration: none; font-weight: bold; }
     .link:hover { text-decoration: underline; }
+    #loading { font-size: 16px; color: #666; margin-bottom: 10px; }
   </style>
 </head>
 <body>
 
 <h2>Search Directory</h2>
 <input type="text" id="search" placeholder="Type to search..." onkeyup="filterData()">
+<div id="loading">Loading directory…</div>
 <div id="results" class="grid"></div>
 
 <script>
@@ -43,6 +45,11 @@ function loadData() {
       });
       allData = rows;
       displayData(rows);
+      document.getElementById('loading').style.display = 'none';
+    })
+    .catch(err => {
+      document.getElementById('loading').innerText = "Failed to load data. Make sure your sheet is published and accessible.";
+      console.error(err);
     });
 }
 
